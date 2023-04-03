@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::fs;
 
-pub fn classify0(in_x: &[f64], data_set: &[Vec<f64>], labels: &[i32], k: usize) -> i32 {
-    let mut distances: Vec<(usize, f64)> = data_set
+pub fn classify0(in_x: &[f32], data_set: &[Vec<f32>], labels: &[i32], k: usize) -> i32 {
+    let mut distances: Vec<(usize, f32)> = data_set
         .iter()
         .enumerate()
         .map(|(i, p)| (i, euclidean_distance(in_x, p)))
@@ -17,10 +17,10 @@ pub fn classify0(in_x: &[f64], data_set: &[Vec<f64>], labels: &[i32], k: usize) 
     *sorted_class_count[0].0
 }
 
-fn euclidean_distance(p1: &[f64], p2: &[f64]) -> f64 {
+fn euclidean_distance(p1: &[f32], p2: &[f32]) -> f32 {
     p1.iter()
         .zip(p2.iter())
         .map(|(&a, &b)| (a - b).powi(2))
-        .sum::<f64>()
+        .sum::<f32>()
         .sqrt()
 }
