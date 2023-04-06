@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fs;
 
 pub fn classify0(in_x: &[f32], data_set: &[Vec<f32>], labels: &[i32], k: usize) -> i32 {
     let mut distances: Vec<(usize, f32)> = data_set

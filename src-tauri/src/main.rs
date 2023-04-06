@@ -3,8 +3,6 @@
 
 use std::vec;
 
-use serde::ser::{Serialize, SerializeStruct, Serializer};
-
 #[derive(serde::Serialize)]
 struct GraphData {
     x: Vec<f32>,
@@ -15,16 +13,22 @@ struct GraphData {
 #[tauri::command]
 fn greet(name: &str) -> String {
     let split: Vec<&str> = name.trim().split(',').collect();
-    let x = split[0];
-    let x: f32 = match x.parse() {
-        Ok(num) => num,
-        Err(_) => 0.0,
+    if split.len() < 2 {
+        return String::from("Not enough inputs");
+    }
+
+    let x: Result<f32, _> = split[0].parse();
+    if let Err(_) = x {
+        return String::from("x must be valid number");
     };
-    let y = split[1];
-    let y: f32 = match y.parse() {
-        Ok(num) => num,
-        Err(_) => 0.0,
+    let x = x.unwrap();
+
+    let y: Result<f32, _> = split[1].parse();
+    if let Err(_) = y {
+        return String::from("y must be valid nuber");
     };
+    let y = y.unwrap();
+
     let data_set = vec![
         vec![1.0, 1.1],
         vec![1.0, 1.0],
